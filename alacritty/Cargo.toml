@@ -10,7 +10,7 @@ edition = "2018"
 
 [dependencies.alacritty_terminal]
 path = "../alacritty_terminal"
-version = "0.12.1-dev"
+version = "0.13.0-dev"
 default-features = false
 
 [dependencies.alacritty_config_derive]
@@ -65,4 +65,3 @@ default = ["wayland", "x11"]
 x11 = ["copypasta/x11", "glutin/x11", "x11-dl", "png"]
 wayland = ["copypasta/wayland", "glutin/wayland", "wayland-client"]
 nightly = []
-bench = []

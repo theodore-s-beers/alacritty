@@ -3,7 +3,6 @@
 #![warn(rust_2018_idioms, future_incompatible)]
 #![deny(clippy::all, clippy::if_not_else, clippy::enum_glob_use, clippy::wrong_pub_self_convention)]
 #![cfg_attr(feature = "cargo-clippy", deny(warnings))]
-#![cfg_attr(all(test, feature = "bench"), feature(test))]
 // With the default subsystem, 'console', windows creates an additional console
 // window for the program.
 // This is silently ignored on non-windows systems.
@@ -33,7 +32,6 @@ use alacritty_terminal::tty;
 mod cli;
 mod clipboard;
 mod config;
-mod cursor;
 mod daemon;
 mod display;
 mod event;
@@ -42,16 +40,11 @@ mod logging;
 #[cfg(target_os = "macos")]
 mod macos;
 mod message_bar;
-mod meter;
 #[cfg(windows)]
 mod panic;
 mod renderer;
 mod scheduler;
 mod url;
-mod window;
-
-#[cfg(all(feature = "wayland", not(any(target_os = "macos", windows))))]
-mod wayland_theme;
 
 mod gl {
     #![allow(clippy::all)]
