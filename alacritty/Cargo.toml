@@ -11,11 +11,6 @@ readme = "README.md"
 homepage = "https://github.com/alacritty/alacritty"
 edition = "2018"
 
-[dependencies.alacritty_terminal]
-path = "../alacritty_terminal"
-version = "0.13.1-dev"
-default-features = false
-
 [dependencies]
 clap = "2"
 log = { version = "0.4", features = ["std", "serde"] }
@@ -37,6 +32,11 @@ dirs = "3.0.1"
 [dependencies.alacritty_config_derive]
 path = "../alacritty_config_derive"
 version = "0.1.0"
+
+[dependencies.alacritty_terminal]
+path = "../alacritty_terminal"
+version = "0.13.1-dev"
+default-features = false
 
 [build-dependencies]
 gl_generator = "0.14.0"
