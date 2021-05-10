@@ -16,10 +16,6 @@ path = "../alacritty_terminal"
 version = "0.13.1-dev"
 default-features = false
 
-[dependencies.alacritty_config_derive]
-path = "../alacritty_config_derive"
-version = "0.1.0"
-
 [dependencies]
 clap = "2"
 log = { version = "0.4", features = ["std", "serde"] }
@@ -37,6 +33,10 @@ libc = "0.2"
 unicode-width = "0.1"
 bitflags = "1"
 dirs = "3.0.1"
+
+[dependencies.alacritty_config_derive]
+path = "../alacritty_config_derive"
+version = "0.1.0"
 
 [build-dependencies]
 gl_generator = "0.14.0"
