@@ -15,7 +15,7 @@ use crate::ansi::{
 };
 use crate::config::Config;
 use crate::event::{Event, EventListener};
-use crate::grid::{Dimensions, DisplayIter, Grid, Scroll};
+use crate::grid::{Dimensions, Grid, GridIterator, Scroll};
 use crate::index::{self, Boundary, Column, Direction, Line, Point, Side};
 use crate::selection::{Selection, SelectionRange};
 use crate::term::cell::{Cell, Flags, LineLength};
@@ -699,7 +699,9 @@ impl<T> Term<T> {
                 point.column = Column(1);
                 point.line += 1;
             },
-            Direction::Right if flags.contains(Flags::WIDE_CHAR) => point.column += 1,
+            Direction::Right if flags.contains(Flags::WIDE_CHAR) => {
+                point.column = min(point.column + 1, self.last_column());
+            },
             Direction::Left if flags.intersects(Flags::WIDE_CHAR | Flags::WIDE_CHAR_SPACER) => {
                 if flags.contains(Flags::WIDE_CHAR_SPACER) {
                     point.column -= 1;
@@ -774,7 +776,7 @@ impl<T> Term<T> {
             // Remove wide char and spacer.
             let wide = cursor_cell.flags.contains(Flags::WIDE_CHAR);
             let point = self.grid.cursor.point;
-            if wide {
+            if wide && point.column + 1 < self.columns() {
                 self.grid[point.line][point.column + 1].flags.remove(Flags::WIDE_CHAR_SPACER);
             } else {
                 self.grid[point.line][point.column - 1].clear_wide();
@@ -1828,7 +1830,7 @@ impl RenderableCursor {
 ///
 /// This contains all content required to render the current terminal view.
 pub struct RenderableContent<'a> {
-    pub display_iter: DisplayIter<'a, Cell>,
+    pub display_iter: GridIterator<'a, Cell>,
     pub selection: Option<SelectionRange>,
     pub cursor: RenderableCursor,
     pub display_offset: usize,
